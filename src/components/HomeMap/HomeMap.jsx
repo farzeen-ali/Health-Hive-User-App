@@ -4,6 +4,7 @@
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import React from 'react';
 import { Image } from 'react-native';
+
 import ambulance from '../../assets/data/ambulance';
 
 const HomeMap = () => {

@@ -43,6 +43,8 @@ const App = () => {
     <>
       <StatusBar barStyle="light-content" />
       <Router />
+      {/* <HomeSearch /> */}
+      {/* <Main /> */}
     </>
   );
 };
