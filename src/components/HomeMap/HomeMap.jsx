@@ -8,15 +8,6 @@ import { Image } from 'react-native';
 import ambulance from '../../assets/data/ambulance';
 
 const HomeMap = () => {
-  // const getAmbulanceImage = (type) => {
-  //   if (type === 'Basic'){
-  //    return require('../../assets/images/Basic.png');
-  //   }
-  //   if (type === 'Advance'){
-  //    return require('../../assets/images/Advance.png');
-  //   }
-  //    return require('../../assets/images/Mortury.png');
-  // };
   return (
     <MapView
        provider={PROVIDER_GOOGLE}
