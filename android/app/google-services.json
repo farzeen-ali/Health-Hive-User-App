@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "956392924685",
+    "project_id": "healthhive-1076a",
+    "storage_bucket": "healthhive-1076a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956392924685:android:867501a398f1a5f1d11744",
+        "android_client_info": {
+          "package_name": "com.healthhive"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkvkkW_p6urCG0IdrBK2zQO0ee8hznNfI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
