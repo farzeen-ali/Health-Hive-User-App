@@ -3,8 +3,14 @@
 import {View, Text, Pressable} from 'react-native';
 import React from 'react';
 import {DrawerContentScrollView, DrawerItemList} from '@react-navigation/drawer';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 const CustomDrawer = (props) => {
-  return (
+  const navigation = useNavigation();
+  const handleLogout = () => {
+    navigation.navigate('Login');
+  };
+    return (
     <DrawerContentScrollView {...props}>
       <View style={{backgroundColor: '#AF1617', padding: 15}}>
         {/* user row */}
@@ -30,6 +36,12 @@ const CustomDrawer = (props) => {
         </Pressable>
       </View>
       <DrawerItemList {...props} />
+      <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 36 }}>
+  <TouchableOpacity style={{ backgroundColor: '#AF1617', padding: 12, borderRadius: 8, alignItems: 'center' }} onPress={handleLogout}>
+    <Text style={{ color: '#fff', fontSize: 18 }}>Logout</Text>
+  </TouchableOpacity>
+</View>
+
     </DrawerContentScrollView>
   );
 };

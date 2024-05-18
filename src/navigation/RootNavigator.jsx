@@ -2,7 +2,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
 import HomeNavigator from './HomeNavigator';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Text, View } from 'react-native';
@@ -19,7 +18,6 @@ const DummyScreen = (props) => {
 
 const RootNavigator = () => {
   return (
-    <NavigationContainer>
       <Drawer.Navigator drawerContent={(props) => (
         <CustomDrawer {...props} />
         )}>
@@ -31,7 +29,6 @@ const RootNavigator = () => {
           {() => <DummyScreen name={'Profile'} />}
         </Drawer.Screen>
       </Drawer.Navigator>
-    </NavigationContainer>
   );
 };
 

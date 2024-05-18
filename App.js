@@ -4,7 +4,8 @@ import React, {useEffect} from 'react';
 import {enableLatestRenderer} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 // Navigation
-import Router from './src/navigation/RootNavigator';
+import Authentication from './src/navigation/Authentication';
+import {NavigationContainer} from '@react-navigation/native';
 
 enableLatestRenderer();
 navigator.geolocation = require('@react-native-community/geolocation');
@@ -42,7 +43,9 @@ const App = () => {
   return (
     <>
       <StatusBar barStyle="light-content" />
-      <Router />
+      <NavigationContainer>
+        <Authentication />
+      </NavigationContainer>
     </>
   );
 };
