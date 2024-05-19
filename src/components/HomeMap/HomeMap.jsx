@@ -7,7 +7,7 @@ import { Image } from 'react-native';
 
 import ambulance from '../../assets/data/ambulance';
 
-const HomeMap = () => {
+const HomeMap = ({currentLocation}) => {
   return (
     <MapView
        provider={PROVIDER_GOOGLE}
@@ -17,8 +17,8 @@ const HomeMap = () => {
         height: '100%',
        }}
        region={{
-        latitude: 24.8580,
-        longitude: 67.0276,
+        latitude: currentLocation.latitude,
+        longitude: currentLocation.longitude,
         latitudeDelta: 0.035,
         longitudeDelta: 0.0121,
        }}
