@@ -53,6 +53,9 @@ const styles = StyleSheet.create({
       marginVertical: 10,
       alignItems: 'center',
     },
+    disabledButton: {
+      opacity: 0.6,
+    },
     buttonText: {
       color: '#fff',
       fontSize: 18,

@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import uuid from 'react-native-uuid';
 import SimpleToast from 'react-native-simple-toast';
@@ -21,6 +22,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [emergencyContact, setEmergencyContact] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleRegister = async () => {
     // Check for empty spaces
@@ -57,6 +59,8 @@ const Register = () => {
       return false;
     }
 
+    setLoading(true);
+
     // Encrypt the password before storing
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
@@ -72,8 +76,15 @@ const Register = () => {
     database()
       .ref(`/users/${userData.id}`)
       .set(userData)
-      .then(() => SimpleToast.show('Registered Successfully'));
-    navigation.navigate('OTP');
+      .then(() => {
+        setLoading(false);
+        SimpleToast.show('Registered Successfully');
+        navigation.navigate('OTP');
+      })
+      .catch((error) => {
+        setLoading(false);
+        SimpleToast.show('Registration failed');
+      });
   };
 
   return (
@@ -116,8 +127,16 @@ const Register = () => {
         keyboardType="phone-pad"
         style={styles.input}
       />
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Register</Text>
+      <TouchableOpacity
+        style={[styles.button, loading && styles.disabledButton]}
+        onPress={handleRegister}
+        disabled={loading}
+      >
+        {loading ? (
+          <ActivityIndicator size="small" color="#FFF" />
+        ) : (
+          <Text style={styles.buttonText}>Register</Text>
+        )}
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Text style={styles.link}>Already have an account? Login</Text>
