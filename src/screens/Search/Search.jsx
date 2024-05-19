@@ -31,8 +31,6 @@ const Search = () => {
       }}
       enablePoweredByContainer={false}
       suppressDefaultStyles
-      currentLocation={true}
-      currentLocationLabel="Current location"
       styles={{
         textInput: search.textInput,
         container: search.autoCompleteContainer,

@@ -25,7 +25,6 @@ const HomeScreen = () => {
             position => {
               const {latitude, longitude} = position.coords;
               setCurrentLocation({latitude, longitude});
-              // console.log(currentLocation);
             },
             error => {
               console.log(error);
@@ -59,7 +58,7 @@ const HomeScreen = () => {
           <View style={{height: Dimensions.get('window').height - 218}}>
             <HomeMap currentLocation={currentLocation} />
           </View>
-          <HomeSearch />
+          <HomeSearch currentLocation={currentLocation} />
         </>
       )}
     </View>

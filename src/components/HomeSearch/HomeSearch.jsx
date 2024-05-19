@@ -5,11 +5,18 @@ import search from './searchStyle';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
-const HomeSearch = () => {
+
+const HomeSearch = ({currentLocation}) => {
   const navigation = useNavigation();
+
   const goToSearch = () => {
     navigation.navigate('Search');
   };
+
+  const callSOS = () => {
+    console.log(currentLocation);
+  };
+
   return (
     <View>
       {/* Search Box */}
@@ -20,7 +27,7 @@ const HomeSearch = () => {
         </View>
       </Pressable>
       {/* Sos Button */}
-      <Pressable style={search.inputBox}>
+      <Pressable onPress={callSOS} style={search.inputBox}>
         <Text style={search.inputText}>No Internet! Press Here (SOS)</Text>
         <View style={search.iconContainer}>
             <MaterialIcons name={'emergency-share'} size={26} color={'white'} />
