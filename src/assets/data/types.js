@@ -3,22 +3,22 @@ export default [
 {
     id: '0',
     type: 'Basic',
-    price: 'Free',
-    info: 'Eidhi, Chippa',
+    price: 'Charges',
+    info: 'Basic Ambulances',
     duration: 45,
 },
 {
     id: '1',
     type: 'Advance',
     price: 'Charges',
-    info: 'Aman, Aman',
+    info: 'Advance Ambulances',
     duration: 45,
 },
 {
     id: '2',
     type: 'Mortury',
     price: 'Charges',
-    info: 'Rescue, Rescue',
+    info: 'Mortury Ambulances',
     duration: 45,
 },
 ];

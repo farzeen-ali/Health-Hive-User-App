@@ -5,6 +5,7 @@ import Register from '../screens/Register/Register';
 import Login from '../screens/Login/Login';
 import OTP from '../screens/OTP/OTP';
 import RootNavigator from './RootNavigator';
+import ForgotPassword from '../screens/ForgotPassword/ForgotPassword';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,7 @@ const Authentication = () => {
         <Stack.Screen name={'Register'} component={Register} />
         <Stack.Screen name={'Login'} component={Login} />
         <Stack.Screen name={'OTP'} component={OTP} />
+        <Stack.Screen name={'ForgotPassword'} component={ForgotPassword} />
         <Stack.Screen name={'RootNavigator'} component={RootNavigator} />
       </Stack.Navigator>
   );

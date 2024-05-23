@@ -64,11 +64,12 @@ const Register = () => {
     // Encrypt the password before storing
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
+    const fullPhoneNumber = `+92${phoneNumber}`;
 
     let userData = {
       id: uuid.v4(),
       username,
-      phoneNumber,
+      phoneNumber: fullPhoneNumber,
       password: hashedPassword,
       emergencyContact,
     };
@@ -79,7 +80,7 @@ const Register = () => {
       .then(() => {
         setLoading(false);
         SimpleToast.show('Registered Successfully');
-        navigation.navigate('OTP');
+        navigation.navigate('OTP', {phoneNumber});
       })
       .catch((error) => {
         setLoading(false);
