@@ -31,7 +31,7 @@ const OTP = ({ route }) => {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Verify OTP</Text>
       <Text style={styles.subtitle}>
-        Please enter the OTP sent to {phoneNumber}
+        Please enter the OTP sent to +92{phoneNumber}
       </Text>
       <TextInput
         placeholder="Enter OTP"

@@ -20,8 +20,8 @@ const Login = () => {
     }
 
     setLoading(true);
-
-    const userRef = database().ref('users').orderByChild('phoneNumber').equalTo(phoneNumber);
+    const fullPhoneNumber = `+92${phoneNumber}`;
+    const userRef = database().ref('users').orderByChild('phoneNumber').equalTo(fullPhoneNumber);
 
     userRef.once('value', snapshot => {
       setLoading(false);

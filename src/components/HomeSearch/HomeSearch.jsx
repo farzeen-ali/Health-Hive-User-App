@@ -10,6 +10,7 @@ const HomeSearch = ({currentLocation}) => {
   const navigation = useNavigation();
 
   const goToSearch = () => {
+    console.log();
     navigation.navigate('Search');
   };
 

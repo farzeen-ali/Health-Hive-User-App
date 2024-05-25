@@ -3,7 +3,7 @@ import {View,Text, Image} from 'react-native';
 import React from 'react';
 import row from './row';
 const AmbulanceTypeRow = (props) => {
-  const {type} = props;
+  const {type, isSelected} = props;
   const getAmbulanceImage = () => {
     if (type.type === 'Basic'){
      return require('../../assets/images/Basic.png');
@@ -14,7 +14,7 @@ const AmbulanceTypeRow = (props) => {
      return require('../../assets/images/Mortury.png');
   };
   return (
-    <View style={row.container}>
+    <View style={[row.container, isSelected ? row.selected : null]}>
       <Image style={row.image} source={getAmbulanceImage()} />
       <View style={row.middleContainer}>
         <Text style={row.type}>{type.type}</Text>

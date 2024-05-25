@@ -7,7 +7,7 @@ import RouteMap from '../../components/RouteMap/RouteMap';
 import AmbulanceTypes from '../../components/AmbulanceTypes/AmbulanceTypes';
 import {useRoute} from '@react-navigation/native';
 
-const Main = (props) => {
+const Main = () => {
   const route = useRoute();
   console.log(route.params);
 
@@ -19,7 +19,7 @@ const Main = (props) => {
       {/* <HomeMap /> */}
     </View>
     <View style={{height: 400}}>
-      <AmbulanceTypes />
+      <AmbulanceTypes origin={originPlace} destination={destinationPlace} />
     </View>
     </View>
   );

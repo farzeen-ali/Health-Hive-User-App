@@ -32,6 +32,9 @@ const row = StyleSheet.create({
         justifyContent: 'flex-end',
         flexDirection: 'row',
     },
+    selected: {
+        backgroundColor: '#D3D3D3', // light grey color
+      },
     tag: {
         height: 20,
         width: 20,
