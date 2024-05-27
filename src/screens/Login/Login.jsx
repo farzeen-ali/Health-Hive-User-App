@@ -64,9 +64,6 @@ const Login = () => {
         secureTextEntry
         style={styles.input}
       />
-      <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
-        <Text style={styles.forgotPassword}>Forgot Password?</Text>
-      </TouchableOpacity>
       <TouchableOpacity
         style={[styles.button, loading && styles.disabledButton]}
         onPress={handleLogin}
@@ -80,6 +77,9 @@ const Login = () => {
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Register')}>
         <Text style={styles.link}>Don't have an account? Register</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+        <Text style={styles.link}>Forgot Password?</Text>
       </TouchableOpacity>
     </ScrollView>
   );
