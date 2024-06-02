@@ -3,11 +3,10 @@
 import {Dimensions, View} from 'react-native';
 import React from 'react';
 import RouteMap from '../../components/RouteMap/RouteMap';
-// import HomeMap from '../../components/HomeMap/HomeMap';
 import AmbulanceTypes from '../../components/AmbulanceTypes/AmbulanceTypes';
 import {useRoute} from '@react-navigation/native';
 
-const Main = () => {
+const Main = ({phoneNumber}) => {
   const route = useRoute();
   console.log(route.params);
 
@@ -19,7 +18,7 @@ const Main = () => {
       {/* <HomeMap /> */}
     </View>
     <View style={{height: 400}}>
-      <AmbulanceTypes origin={originPlace} destination={destinationPlace} />
+      <AmbulanceTypes origin={originPlace} phoneNumber={phoneNumber} destination={destinationPlace} />
     </View>
     </View>
   );

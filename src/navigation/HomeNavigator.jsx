@@ -7,16 +7,20 @@ import Main from '../screens/Main/Main';
 
 const Stack = createStackNavigator();
 
-const HomeNavigator = () => {
+const HomeNavigator = ({ phoneNumber }) => {
   return (
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
         }}
       >
-        <Stack.Screen name={'Home'} component={HomeScreen} />
+        <Stack.Screen name="HomeScreen">
+        {(props) => <HomeScreen {...props} phoneNumber={phoneNumber} />}
+      </Stack.Screen>
         <Stack.Screen name={'Search'} component={Search} />
-        <Stack.Screen name={'Main'} component={Main} />
+        <Stack.Screen name="Main">
+        {(props) => <Main {...props} phoneNumber={phoneNumber} />}
+      </Stack.Screen>
       </Stack.Navigator>
   );
 };

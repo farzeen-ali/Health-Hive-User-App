@@ -3,8 +3,12 @@ import {View, Dimensions, Platform, PermissionsAndroid} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import HomeMap from '../../components/HomeMap/HomeMap';
 import HomeSearch from '../../components/HomeSearch/HomeSearch';
+import {enableLatestRenderer} from 'react-native-maps';
 
-const HomeScreen = () => {
+enableLatestRenderer();
+navigator.geolocation = require('@react-native-community/geolocation');
+
+const HomeScreen = ({phoneNumber}) => {
   const [currentLocation, setCurrentLocation] = useState(null);
 
   useEffect(() => {
@@ -58,7 +62,10 @@ const HomeScreen = () => {
           <View style={{height: Dimensions.get('window').height - 218}}>
             <HomeMap currentLocation={currentLocation} />
           </View>
-          <HomeSearch currentLocation={currentLocation} />
+          <HomeSearch
+            currentLocation={currentLocation}
+            phoneNumber={phoneNumber}
+          />
         </>
       )}
     </View>

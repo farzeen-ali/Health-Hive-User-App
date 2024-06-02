@@ -30,6 +30,8 @@ const Search = () => {
         setOriginPlace({data, details});
       }}
       enablePoweredByContainer={false}
+      currentLocation={true}
+      currentLocationLabel="Current location"
       suppressDefaultStyles
       styles={{
         textInput: search.textInput,

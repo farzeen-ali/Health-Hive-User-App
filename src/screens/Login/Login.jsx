@@ -34,7 +34,7 @@ const Login = () => {
 
         if (bcrypt.compareSync(password, userData.password)) {
           SimpleToast.show('Login Successful');
-          navigation.navigate('RootNavigator');
+          navigation.navigate('RootNavigator', { phoneNumber: fullPhoneNumber });
         } else {
           SimpleToast.show('Invalid credentials');
         }

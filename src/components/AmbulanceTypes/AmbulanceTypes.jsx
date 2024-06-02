@@ -6,7 +6,8 @@ import database from '@react-native-firebase/database';
 import AmbulanceTypeRow from '../AmbulanceTypeRow/AmbulanceTypeRow';
 import SimpleToast from 'react-native-simple-toast';
 
-const AmbulanceTypes = ({ origin, destination }) => {
+const AmbulanceTypes = ({ origin, destination, phoneNumber }) => {
+  console.log(phoneNumber);
   const [typesData, setTypesData] = useState([]);
   const [selectedAmbulance, setSelectedAmbulance] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -39,6 +40,7 @@ const AmbulanceTypes = ({ origin, destination }) => {
       const emergencyId = database().ref().child('emergencies').push().key;
 
       const emergencyData = {
+        phoneNumber,
         selectedAmbulance,
         origin: {
           description: origin.data.description,

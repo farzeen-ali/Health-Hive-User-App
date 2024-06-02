@@ -16,12 +16,15 @@ const DummyScreen = (props) => {
   );
 };
 
-const RootNavigator = () => {
+const RootNavigator = ({ route }) => {
+  const { phoneNumber } = route.params || {};
   return (
       <Drawer.Navigator drawerContent={(props) => (
         <CustomDrawer {...props} />
         )}>
-        <Drawer.Screen name="Health Hive" component={HomeNavigator} />
+        <Drawer.Screen name="Health Hive">
+        {(props) => <HomeNavigator {...props} phoneNumber={phoneNumber} />}
+      </Drawer.Screen>
         <Drawer.Screen name="Help">
           {() => <DummyScreen name={'Help'} />}
         </Drawer.Screen>
