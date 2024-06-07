@@ -1,10 +1,12 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import SimpleToast from 'react-native-simple-toast';
 import { useNavigation } from '@react-navigation/native';
 import database from '@react-native-firebase/database';
 import bcrypt from 'react-native-bcrypt';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid'; // Importing react-native-uuid
 import styles from './style';
 
 const Login = () => {
@@ -12,6 +14,24 @@ const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const token = await AsyncStorage.getItem('session_token');
+      if (token) {
+        const storedPhoneNumber = await AsyncStorage.getItem('phone_number');
+        navigation.navigate('RootNavigator', { phoneNumber: storedPhoneNumber });
+      }
+    };
+
+    checkSession();
+  }, [navigation]);
+
+  const generateToken = () => {
+    const rawToken = uuid.v4(); // Generating UUID using react-native-uuid
+    const hashedToken = bcrypt.hashSync(rawToken, 10); // Hash the token
+    return hashedToken; // Return only the hashed token
+  };
 
   const handleLogin = async () => {
     if (phoneNumber.trim() === '' || password.trim() === '') {
@@ -34,6 +54,11 @@ const Login = () => {
 
         if (bcrypt.compareSync(password, userData.password)) {
           SimpleToast.show('Login Successful');
+
+          const sessionToken = generateToken();
+          AsyncStorage.setItem('session_token', sessionToken); // Store hashed token
+          AsyncStorage.setItem('phone_number', fullPhoneNumber);
+
           navigation.navigate('RootNavigator', { phoneNumber: fullPhoneNumber });
         } else {
           SimpleToast.show('Invalid credentials');

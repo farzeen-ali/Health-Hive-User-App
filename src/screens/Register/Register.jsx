@@ -73,6 +73,19 @@ const Register = () => {
     setLoading(true);
 
     try {
+      const fullPhoneNumber = `+92${phoneNumber}`;
+      // Check if the phone number is already registered
+      const phoneSnapshot = await database()
+        .ref('users')
+        .orderByChild('phoneNumber')
+        .equalTo(fullPhoneNumber)
+        .once('value');
+      if (phoneSnapshot.exists()) {
+        setLoading(false);
+        SimpleToast.show('Phone number already in use');
+        return false;
+      }
+
       // Check if the email is already registered
       const emailSnapshot = await database()
         .ref('users')
@@ -85,12 +98,11 @@ const Register = () => {
         return false;
       }
 
-      const fullPhoneNumber = `+92${phoneNumber}`;
       // Hash the password
       const hashedPassword = bcrypt.hashSync(password, 10);
 
-      // Register the user with Firebase
-      const { user } = await auth().createUserWithEmailAndPassword(email, hashedPassword);
+      // Register the user with Firebase Authentication
+      const { user } = await auth().createUserWithEmailAndPassword(email, password);
 
       // Send email verification
       await user.sendEmailVerification();
@@ -107,16 +119,14 @@ const Register = () => {
       await database().ref('users').child(user.uid).set(userData);
 
       setLoading(false);
-      SimpleToast.show(
-        'Registration successful. Please check your email inbox to verify your email.'
-      );
+      SimpleToast.show('Registration successful. Please check your email inbox to verify your email.');
 
       // Navigate to Login screen after registration
       navigation.navigate('Login');
     } catch (error) {
       setLoading(false);
       SimpleToast.show('Failed to register. Please try again.');
-      // console.error(error);
+      console.error(error);
     }
   };
 
@@ -186,4 +196,3 @@ const Register = () => {
 };
 
 export default Register;
-

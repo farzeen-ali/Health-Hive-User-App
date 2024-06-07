@@ -19,7 +19,6 @@ const {EmergencyCallModule} = NativeModules;
 
 const HomeSearch = ({currentLocation, phoneNumber}) => {
   const navigation = useNavigation();
-  console.log(phoneNumber);
   useEffect(() => {
     if (Platform.OS === 'android') {
       requestCallPermission();

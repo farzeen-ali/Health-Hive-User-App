@@ -1,28 +1,50 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
-import { View, Text, Pressable, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+import database from '@react-native-firebase/database';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 const CustomDrawer = (props) => {
   const navigation = useNavigation();
+  const { phoneNumber } = props;
 
-  const handleLogout = () => {
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const snapshot = await database().ref('users').orderByChild('phoneNumber').equalTo(phoneNumber).once('value');
+        if (snapshot.exists()) {
+          const userData = snapshot.val();
+          const userId = Object.keys(userData)[0];
+          setUsername(userData[userId].username);
+        } else {
+          console.log('User not found');
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, [phoneNumber]);
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('session_token');
+    await AsyncStorage.removeItem('phone_number');
     navigation.navigate('Login');
   };
 
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.header}>
-        <View style={styles.avatar} />
         <View>
-          <Text style={styles.username}>Farzeen Ali</Text>
-          <Text style={styles.phone}>0310 2843036</Text>
+          <Text style={styles.username}>{username}</Text>
+          <Text style={styles.phone}>{phoneNumber}</Text>
         </View>
       </View>
-      <Pressable onPress={() => { console.log('Emergency Contacts'); }} style={styles.menuItem}>
-        <Text style={styles.menuText}>Emergency Contacts</Text>
-      </Pressable>
       <DrawerItemList {...props} />
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <Text style={styles.logoutText}>Logout</Text>
@@ -37,14 +59,9 @@ const styles = StyleSheet.create({
     padding: 15,
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
-  },
-  avatar: {
-    backgroundColor: 'grey',
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 15,
+    marginBottom: 30,
+    marginTop: -5,
+    justifyContent: 'center',
   },
   username: {
     color: '#fff',
@@ -52,7 +69,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   phone: {
-    color: '#fa8270',
+    color: '#fff',
   },
   menuItem: {
     backgroundColor: '#AF1617',
@@ -69,7 +86,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 15,
     marginHorizontal: 15,
-    marginBottom: 20,
+    marginTop: 450,
     borderRadius: 8,
     alignItems: 'center',
   },
