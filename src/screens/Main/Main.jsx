@@ -15,7 +15,6 @@ const Main = ({phoneNumber}) => {
     <View style={{display: 'flex', justifyContent: 'space-between'}}>
     <View style={{height: Dimensions.get('window').height - 466}}>
       <RouteMap origin={originPlace} destination={destinationPlace} />
-      {/* <HomeMap /> */}
     </View>
     <View style={{height: 400}}>
       <AmbulanceTypes origin={originPlace} phoneNumber={phoneNumber} destination={destinationPlace} />

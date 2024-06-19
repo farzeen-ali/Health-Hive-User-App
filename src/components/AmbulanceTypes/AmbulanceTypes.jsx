@@ -5,11 +5,13 @@ import { View, Text, TouchableOpacity, Pressable, ActivityIndicator } from 'reac
 import database from '@react-native-firebase/database';
 import AmbulanceTypeRow from '../AmbulanceTypeRow/AmbulanceTypeRow';
 import SimpleToast from 'react-native-simple-toast';
+import moment from 'moment';
 
 const AmbulanceTypes = ({ origin, destination, phoneNumber }) => {
   const [typesData, setTypesData] = useState([]);
   const [selectedAmbulance, setSelectedAmbulance] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [status, setStatus] = useState('pending');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,16 +42,12 @@ const AmbulanceTypes = ({ origin, destination, phoneNumber }) => {
 
       const emergencyData = {
         phoneNumber,
-        selectedAmbulance,
-        origin: {
-          description: origin.data.description,
-          formatted_address: origin.details.formatted_address,
-        },
-        destination: {
-          description: destination.data.description,
-          formatted_address: destination.details.formatted_address,
-        },
+        selectedAmbulance: selectedAmbulance.type,
+        origin: origin.data.description,
+        destination: destination.data.description,
         emergencyId,
+        time: moment().format('h:mm a DD-MM-YYYY'),
+        status,
       };
 
       database().ref(`emergencies/${emergencyId}`).set(emergencyData)

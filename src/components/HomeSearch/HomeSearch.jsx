@@ -1,4 +1,5 @@
-import React, {useEffect} from 'react';
+/* eslint-disable prettier/prettier */
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -10,20 +11,26 @@ import {
 import search from './searchStyle';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import database from '@react-native-firebase/database';
 import moment from 'moment';
-import {NativeModules} from 'react-native';
+import { NativeModules } from 'react-native';
+import axios from 'axios';
 
-const {EmergencyCallModule} = NativeModules;
+const { EmergencyCallModule } = NativeModules;
 
-const HomeSearch = ({currentLocation, phoneNumber}) => {
+const HomeSearch = ({ currentLocation, phoneNumber }) => {
   const navigation = useNavigation();
+  const [formattedAddress, setFormattedAddress] = useState(null);
+
   useEffect(() => {
     if (Platform.OS === 'android') {
       requestCallPermission();
     }
-  }, []);
+    if (currentLocation) {
+      fetchAddress(currentLocation.latitude, currentLocation.longitude);
+    }
+  }, [currentLocation]);
 
   const requestCallPermission = async () => {
     try {
@@ -31,8 +38,7 @@ const HomeSearch = ({currentLocation, phoneNumber}) => {
         PermissionsAndroid.PERMISSIONS.CALL_PHONE,
         {
           title: 'Call Permission',
-          message:
-            'This app needs access to your phone calls to make emergency calls.',
+          message: 'This app needs access to your phone calls to make emergency calls.',
           buttonNeutral: 'Ask Me Later',
           buttonNegative: 'Cancel',
           buttonPositive: 'OK',
@@ -48,8 +54,24 @@ const HomeSearch = ({currentLocation, phoneNumber}) => {
     }
   };
 
+  const fetchAddress = async (latitude, longitude) => {
+    const API_KEY = 'AIzaSyCjDV8xreqH9D6m_oqnX8l6wb-39qEksXw';
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`;
+
+    try {
+      const response = await axios.get(url);
+      if (response.data.status === 'OK') {
+        const address = response.data.results[0].formatted_address;
+        setFormattedAddress(address);
+      } else {
+        throw new Error('Unable to fetch address');
+      }
+    } catch (error) {
+      console.error('Error fetching address: ', error);
+    }
+  };
+
   const goToSearch = () => {
-    console.log();
     navigation.navigate('Search');
   };
 
@@ -73,7 +95,7 @@ const HomeSearch = ({currentLocation, phoneNumber}) => {
           onPress: () => {
             const emergencyData = {
               emergencyContact: phoneNumber,
-              location: currentLocation,
+              location: formattedAddress || currentLocation,
               timestamp: moment().format('h:mm a DD/MM/YYYY'),
             };
             database()
@@ -89,7 +111,7 @@ const HomeSearch = ({currentLocation, phoneNumber}) => {
           },
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   };
 
@@ -99,11 +121,7 @@ const HomeSearch = ({currentLocation, phoneNumber}) => {
       <Pressable onPress={goToSearch} style={search.inputBox}>
         <Text style={search.inputText}>Emergency! Call Ambulance</Text>
         <View style={search.iconContainer}>
-          <MaterialCommunityIcons
-            name={'car-emergency'}
-            size={26}
-            color={'white'}
-          />
+          <MaterialCommunityIcons name={'car-emergency'} size={26} color={'white'} />
         </View>
       </Pressable>
       {/* SOS Button */}

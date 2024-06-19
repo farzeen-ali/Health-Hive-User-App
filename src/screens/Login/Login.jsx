@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import database from '@react-native-firebase/database';
 import bcrypt from 'react-native-bcrypt';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import uuid from 'react-native-uuid'; // Importing react-native-uuid
+import uuid from 'react-native-uuid';
 import styles from './style';
 
 const Login = () => {
@@ -28,9 +28,9 @@ const Login = () => {
   }, [navigation]);
 
   const generateToken = () => {
-    const rawToken = uuid.v4(); // Generating UUID using react-native-uuid
-    const hashedToken = bcrypt.hashSync(rawToken, 10); // Hash the token
-    return hashedToken; // Return only the hashed token
+    const rawToken = uuid.v4();
+    const hashedToken = bcrypt.hashSync(rawToken, 10);
+    return hashedToken;
   };
 
   const handleLogin = async () => {
@@ -56,7 +56,7 @@ const Login = () => {
           SimpleToast.show('Login Successful');
 
           const sessionToken = generateToken();
-          AsyncStorage.setItem('session_token', sessionToken); // Store hashed token
+          AsyncStorage.setItem('session_token', sessionToken);
           AsyncStorage.setItem('phone_number', fullPhoneNumber);
 
           navigation.navigate('RootNavigator', { phoneNumber: fullPhoneNumber });
