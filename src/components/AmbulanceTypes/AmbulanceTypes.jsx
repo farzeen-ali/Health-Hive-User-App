@@ -11,7 +11,7 @@ const AmbulanceTypes = ({ origin, destination, phoneNumber }) => {
   const [typesData, setTypesData] = useState([]);
   const [selectedAmbulance, setSelectedAmbulance] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [status, setStatus] = useState('pending');
+  const [status, setStatus] = useState('Pending');
 
   useEffect(() => {
     const fetchData = async () => {

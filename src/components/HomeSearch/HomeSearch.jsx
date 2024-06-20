@@ -99,7 +99,7 @@ const HomeSearch = ({ currentLocation, phoneNumber }) => {
               timestamp: moment().format('h:mm a DD/MM/YYYY'),
             };
             database()
-              .ref(`sosEmergencies/${phoneNumber}`)
+              .ref('sosEmergencies')
               .push(emergencyData)
               .then(() => {
                 console.log('Emergency data saved successfully');
